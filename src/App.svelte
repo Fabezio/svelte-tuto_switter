@@ -2,6 +2,11 @@
 	export let name;
 	import Message from './Message.svelte'
 	let messages = []
+	let isVisible = true
+	function toggle() {
+		isVisible = !isVisible
+		console.log(isVisible)
+	}
 	function addMessage(event) {
 		console.log(event.detail)
 		messages = [event.detail, ...messages]
@@ -23,16 +28,16 @@
 	h1 {
 		color: purple;
 		text-align: center;
-		
 	}
+		
 	.author {
 		font-weight: bold;
 		margin-bottom: .5em;
 	}
+		
 	.grey {
 		color: grey;
 	}
-	
 
 	@media (min-width: 640px) {
 		main {
@@ -50,7 +55,11 @@
 <main>
 	<h1>{name.toUpperCase()}</h1>
 	<!-- <p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p> -->
-	<Message on:message={addMessage}/>
+	<button on:click={toggle}>{isVisible ? 'hide' : 'show'}</button>
+	<br>
+	{#if isVisible}
+		<Message on:message={addMessage}/>
+	{/if}
 	<div>
 	<!-- <h3>Preview</h3>
 	<p>
